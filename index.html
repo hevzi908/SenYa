@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>SenYa — игровая платформа</title>
+<style>
+:root{--bg:#090909;--panel:#141414;--panel2:#1c1c1c;--line:#303030;--red:#ef233c;--red2:#a91129;--text:#f5f5f5;--muted:#a5a5a5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Arial,Helvetica,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.wrap{max-width:1160px;margin:auto;padding:0 22px}
+header{position:sticky;top:0;z-index:10;background:#090909f2;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{height:68px;display:flex;align-items:center;gap:24px}.logo{font-size:29px;font-weight:900;letter-spacing:-1.5px;color:white;text-decoration:none}.logo span{color:var(--red)}
+.navlinks{display:flex;gap:8px;align-items:center}.navlinks button,.navright button{border:0;background:transparent;color:#bbb;padding:9px 11px;border-radius:8px}.navlinks button:hover,.navlinks button.active{background:#271116;color:#fff}.navright{margin-left:auto;display:flex;gap:8px;align-items:center}.navright .user-label{color:#bbb;font-size:13px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{border:1px solid var(--line);border-radius:9px;background:var(--panel2);color:#fff;padding:10px 15px;font-weight:700}.btn:hover{border-color:#777}.btn.red{background:var(--red);border-color:var(--red)}.btn.red:hover{background:#d91c34}.btn.small{padding:7px 10px;font-size:13px}
+main{min-height:70vh}.view{display:none;padding:38px 0 60px}.view.active{display:block}
+.hero{padding:26px 0 34px;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}.eyebrow{color:#ff5368;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(42px,6vw,68px);line-height:.98;letter-spacing:-3px;margin:14px 0}.hero h1 span{color:var(--red)}.hero p{color:var(--muted);max-width:520px;font-size:17px}.actions{display:flex;gap:10px;flex-wrap:wrap}.heroart{height:260px;border:1px solid #4b1923;border-radius:18px;background:radial-gradient(ellipse at 70% 40%,#78162a,transparent 50%),linear-gradient(135deg,#241016,#0d0d0d 65%);display:grid;place-items:center;position:relative;overflow:hidden}.heroart:before,.heroart:after{content:"";position:absolute;width:210px;height:210px;border:1px solid #772033;border-radius:50%;transform:scaleX(1.6) rotate(30deg)}.heroart:after{width:300px;height:300px;border-color:#451722}.mark{z-index:1;font-size:clamp(70px,10vw,112px);font-weight:1000;letter-spacing:-8px;text-shadow:0 0 45px #ed1b3b77}.mark span{color:var(--red)}
+h2{font-size:26px;letter-spacing:-.5px;margin:0 0 8px}.muted{color:var(--muted)}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin:12px 0 17px}.searchrow{display:flex;gap:10px;margin:16px 0}.field{width:100%;background:#101010;border:1px solid var(--line);border-radius:9px;padding:12px 13px;color:#fff;outline:none}.field:focus{border-color:var(--red)}textarea.field{min-height:110px;resize:vertical}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.chip{background:#151515;border:1px solid var(--line);color:#bbb;padding:7px 12px;border-radius:999px}.chip.active,.chip:hover{background:#35121a;border-color:#9b1d32;color:white}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.game{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}.game:hover{border-color:#782236}.cover{height:155px;display:grid;place-items:center;background:linear-gradient(135deg,#541522,#151515);font-weight:900;font-size:32px;overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover}.gamebody{padding:14px}.gamebody h3{margin:0 0 5px}.gamebody p{color:#aaa;font-size:13px;margin:0;min-height:40px}.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;color:#999;font-size:12px}.tag{color:#ff7383;background:#35121a;padding:4px 7px;border-radius:5px}.empty{display:none;border:1px dashed var(--line);padding:28px;text-align:center;color:#aaa;border-radius:10px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:20px;max-width:680px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.formrow{margin:0 0 14px}.formrow label{display:block;color:#ddd;font-size:13px;font-weight:700;margin:0 0 6px}.checkrow{display:flex;gap:9px;align-items:flex-start;color:#ccc;font-size:13px;margin:15px 0}.checkrow input{margin-top:4px;accent-color:var(--red)}.hint{font-size:12px;color:#999}.error{color:#ff7182;font-size:13px;min-height:18px;margin:8px 0}.success{color:#8ce0a5;font-size:13px;min-height:18px;margin:8px 0}
+.profilebox{display:flex;align-items:center;gap:15px;margin:18px 0 22px}.avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#481521;color:white;font-size:24px;font-weight:900}.profilebox h3{margin:0}.rulebox{background:#101010;border:1px solid var(--line);border-radius:9px;padding:14px;color:#bbb;font-size:13px;margin:15px 0}.rulebox li{margin:5px 0}
+footer{border-top:1px solid var(--line);padding:24px 0;color:#777;font-size:13px}.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.heroart{height:200px}.grid{grid-template-columns:repeat(2,1fr)}.nav{gap:10px}.navlinks{gap:0}.navlinks button{padding:8px 7px;font-size:13px}.navright .user-label{display:none}}
+@media(max-width:540px){.wrap{padding:0 15px}.nav{height:auto;min-height:62px;flex-wrap:wrap;padding-top:7px;padding-bottom:7px}.logo{font-size:25px}.navlinks{order:3;width:100%;overflow-x:auto}.navright{margin-left:auto}.navright button{padding:7px 9px;font-size:13px}.view{padding-top:26px}.grid{grid-template-columns:1fr}.cover{height:180px}.formgrid{grid-template-columns:1fr}.hero h1{letter-spacing:-2px}}
+</style></head>
+<body>
+<header><div class="wrap nav">
+<a class="logo" href="#" onclick="showView('home');return false">Sen<span>Ya</span></a>
+<nav class="navlinks">
+<button class="active" data-view="home" onclick="showView('home')">Главная</button>
+<button data-view="catalog" onclick="showView('catalog')">Игры</button>
+<button data-view="publish" onclick="showView('publish')">Опубликовать</button>
+<button data-view="profile" onclick="showView('profile')">Профиль</button>
+</nav>
+<div class="navright" id="navright">
+<button onclick="showView('login')">Войти</button><button class="btn red small" onclick="showView('register')">Регистрация</button>
+</div></div></header>
+<main class="wrap">
+<section class="view active" id="home">
+<div class="hero"><div><div class="eyebrow">Твоя игра. Твоя площадка.</div><h1>Открой мир<br><span>новых игр.</span></h1><p>SenYa — место, где разработчики делятся своими играми, а игроки находят новые приключения.</p><div class="actions"><button class="btn red" onclick="showView('catalog')">Исследовать игры</button><button class="btn" onclick="showView('publish')">Опубликовать игру</button></div></div><div class="heroart"><div class="mark">Sen<span>Ya</span></div></div></div>
+<div class="sectionhead"><div><h2>Игры сообщества</h2><div class="muted">Последние опубликованные проекты</div></div><button class="btn small" onclick="showView('catalog')">Весь каталог →</button></div><div class="grid" id="homeGrid"></div><div class="empty" id="homeEmpty">Пока нет опубликованных игр. Стань первым разработчиком!</div>
+</section>
+<section class="view" id="catalog">
+<div class="sectionhead"><div><h2>Каталог игр</h2><div class="muted">Ищи игры по названию или категории</div></div></div>
+<div class="searchrow"><input class="field" id="search" placeholder="Поиск игр..." oninput="renderGames()"><button class="btn" onclick="document.getElementById('search').value='';renderGames()">Сбросить</button></div>
+<div class="filters"><button class="chip active" data-cat="Все" onclick="setCategory('Все',this)">Все</button><button class="chip" data-cat="Экшен" onclick="setCategory('Экшен',this)">Экшен</button><button class="chip" data-cat="Хоррор" onclick="setCategory('Хоррор',this)">Хоррор</button><button class="chip" data-cat="Песочница" onclick="setCategory('Песочница',this)">Песочница</button><button class="chip" data-cat="Приключения" onclick="setCategory('Приключения',this)">Приключения</button><button class="chip" data-cat="Другое" onclick="setCategory('Другое',this)">Другое</button></div>
+<div class="grid" id="catalogGrid"></div><div class="empty" id="catalogEmpty">Ничего не найдено.</div>
+</section>
+<section class="view" id="register">
+<h2>Создать аккаунт</h2><p class="muted">Присоединяйся к сообществу SenYa.</p>
+<form class="panel" id="registerForm">
+<div class="formrow"><label for="regNick">Никнейм</label><input class="field" id="regNick" required minlength="3" maxlength="20" placeholder="Твой никнейм"></div>
+<div class="formrow"><label for="regEmail">Электронная почта</label><input class="field" id="regEmail" type="email" required placeholder="name@example.com"></div>
+<div class="formgrid"><div class="formrow"><label for="regPass">Пароль</label><input class="field" id="regPass" type="password" minlength="8" required placeholder="Минимум 8 символов"></div><div class="formrow"><label for="regBirth">Дата рождения</label><input class="field" id="regBirth" type="date" required></div></div>
+<div class="rulebox"><b style="color:#fff">Правила SenYa</b><ol><li>Уважай других пользователей.</li><li>Не загружай вирусы и вредоносные файлы.</li><li>Публикуй только игры и материалы, на которые у тебя есть права.</li><li>Не размещай чужие личные данные.</li><li>Не публикуй незаконный или опасный контент.</li></ol></div>
+<label class="checkrow"><input id="acceptRules" type="checkbox" required><span>Я прочитал(а) и принимаю правила SenYa.</span></label>
+<div class="error" id="regError"></div><button class="btn red" type="submit">Создать аккаунт</button>
+<p class="hint">Демо-режим: профиль сохраняется только в этом браузере. Не используй настоящий или важный пароль. Для публичного запуска нужна защищённая серверная регистрация.</p>
+</form></section>
+<section class="view" id="login">
+<h2>Вход в SenYa</h2><p class="muted">Войди в аккаунт, созданный в этом браузере.</p>
+<form class="panel" id="loginForm"><div class="formrow"><label for="loginEmail">Электронная почта</label><input class="field" id="loginEmail" type="email" required></div><div class="formrow"><label for="loginPass">Пароль</label><input class="field" id="loginPass" type="password" required></div><div class="error" id="loginError"></div><button class="btn red" type="submit">Войти</button><p class="hint">Это локальная демонстрация. Не используй настоящий пароль: серверной защиты пока нет.</p></form>
+</section>
+<section class="view" id="publish">
+<h2>Опубликовать игру</h2><p class="muted">Добавь игру в каталог SenYa. Для публикации сначала войди в аккаунт.</p>
+<form class="panel" id="publishForm">
+<div class="formrow"><label for="gameTitle">Название игры</label><input class="field" id="gameTitle" required maxlength="45" placeholder="Например, My Awesome Game"></div>
+<div class="formrow"><label for="gameDesc">Описание</label><textarea class="field" id="gameDesc" required maxlength="300" placeholder="Расскажи игрокам о своей игре..."></textarea></div>
+<div class="formgrid"><div class="formrow"><label for="gameCat">Категория</label><select class="field" id="gameCat"><option>Экшен</option><option>Хоррор</option><option>Песочница</option><option>Приключения</option><option>Другое</option></select></div><div class="formrow"><label for="gameLink">Ссылка на игру (необязательно)</label><input class="field" id="gameLink" type="url" placeholder="https://..."></div></div>
+<div class="formrow"><label for="gameCover">Обложка (необязательно, до 1 МБ)</label><input class="field" id="gameCover" type="file" accept="image/png,image/jpeg,image/webp"></div>
+<div class="error" id="pubError"></div><div class="success" id="pubSuccess"></div><button class="btn red" type="submit">Опубликовать</button>
+<p class="hint">Пока публикация сохраняется только в этом браузере. Файл самой игры на сервер не загружается — для этого понадобится хранилище и backend.</p>
+</form></section>
+<section class="view" id="profile">
+<h2>Мой профиль</h2><div id="profileContent" class="panel"></div>
+</section>
+</main>
+<footer><div class="wrap foot"><span><b style="color:#fff">Sen<span style="color:#ef233c">Ya</span></b> © 2026</span><span>Демонстрационная версия · SenYa</span></div></footer>
+<script>
+const DB_USER='senya_demo_user_v2', DB_GAMES='senya_demo_games_v2', DB_SESSION='senya_demo_session_v2';
+let category='Все';
+function getUser(){try{return JSON.parse(localStorage.getItem(DB_USER)||'null')}catch(e){return null}}
+function getGames(){try{return JSON.parse(localStorage.getItem(DB_GAMES)||'[]')}catch(e){return []}}
+function setGames(g){localStorage.setItem(DB_GAMES,JSON.stringify(g))}
+function currentUser(){const s=localStorage.getItem(DB_SESSION);const u=getUser();return s&&u&&s===u.email?u:null}
+function showView(id){
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+ document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+ if(id==='profile')renderProfile(); if(id==='catalog')renderGames(); if(id==='home')renderHome();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function updateNav(){
+ const u=currentUser(), el=document.getElementById('navright');
+ el.innerHTML=u?'<span class="user-label">Привет, '+escapeHtml(u.nickname)+'</span><button class="btn small" onclick="showView(\\'profile\\')">Профиль</button><button class="btn small" onclick="logout()">Выйти</button>':'<button onclick="showView(\\'login\\')">Войти</button><button class="btn red small" onclick="showView(\\'register\\')">Регистрация</button>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setCategory(c,el){category=c;document.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active',b===el));renderGames()}
+function gameCard(g){return '<article class="game"><div class="cover">'+(g.cover?'<img src="'+g.cover+'" alt="Обложка '+escapeHtml(g.title)+'">':'<span>'+escapeHtml(g.title.slice(0,18))+'</span>')+'</div><div class="gamebody"><h3>'+escapeHtml(g.title)+'</h3><p>'+escapeHtml(g.description)+'</p><div class="meta"><span class="tag">'+escapeHtml(g.category)+'</span><span>Автор: '+escapeHtml(g.author)+'</span></div>'+(g.link?'<div style="margin-top:12px"><a class="btn small red" href="'+escapeHtml(g.link)+'" target="_blank" rel="noopener noreferrer">Открыть игру ↗</a></div>':'')+'</div></article>'}
+function renderGames(){const q=(document.getElementById('search')?.value||'').toLowerCase();const games=getGames().filter(g=>(category==='Все'||g.category===category)&&(g.title.toLowerCase().includes(q)||g.description.toLowerCase().includes(q)));document.getElementById('catalogGrid').innerHTML=games.map(gameCard).join('');document.getElementById('catalogEmpty').style.display=games.length?'none':'block'}
+function renderHome(){const games=getGames().slice().reverse().slice(0,3);document.getElementById('homeGrid').innerHTML=games.map(gameCard).join('');document.getElementById('homeEmpty').style.display=games.length?'none':'block'}
+function renderProfile(){const el=document.getElementById('profileContent'),u=currentUser();if(!u){el.innerHTML='<p class="muted">Ты ещё не вошёл в аккаунт.</p><button class="btn red" onclick="showView(\\'login\\')">Войти</button> <button class="btn" onclick="showView(\\'register\\')">Регистрация</button>';return}const own=getGames().filter(g=>g.author===u.nickname);el.innerHTML='<div class="profilebox"><div class="avatar">'+escapeHtml(u.nickname.charAt(0).toUpperCase())+'</div><div><h3>'+escapeHtml(u.nickname)+'</h3><div class="muted">'+escapeHtml(u.email)+'</div></div></div><p><b>Дата рождения:</b> '+escapeHtml(u.birthdate)+'</p><p><b>Опубликовано игр:</b> '+own.length+'</p><h3>Мои игры</h3>'+(own.length?'<div class="grid">'+own.map(gameCard).join('')+'</div>':'<p class="muted">Ты пока не опубликовал игры.</p>')}
+function logout(){localStorage.removeItem(DB_SESSION);updateNav();showView('home')}
+document.getElementById('registerForm').addEventListener('submit',e=>{
+ e.preventDefault();const nick=document.getElementById('regNick').value.trim(),email=document.getElementById('regEmail').value.trim().toLowerCase(),pass=document.getElementById('regPass').value,birth=document.getElementById('regBirth').value,err=document.getElementById('regError');
+ err.textContent='';if(nick.length<3){err.textContent='Никнейм должен быть не короче 3 символов.';return}if(pass.length<8){err.textContent='Пароль должен быть не короче 8 символов.';return}if(!document.getElementById('acceptRules').checked){err.textContent='Прими правила SenYa.';return}if(!birth||new Date(birth)>=new Date()){err.textContent='Укажи корректную дату рождения.';return}if(getUser()){err.textContent='В этом браузере уже есть демо-аккаунт. Выйди из него перед созданием другого.';return}
+ // This local-only prototype stores a password solely to demonstrate local sign-in. Never use a real password here.
+ const user={nickname:nick,email,password:pass,birthdate:birth};localStorage.setItem(DB_USER,JSON.stringify(user));localStorage.setItem(DB_SESSION,email);e.target.reset();updateNav();showView('profile');alert('Демо-аккаунт создан! Добро пожаловать в SenYa, '+nick+'!');
+});
+document.getElementById('loginForm').addEventListener('submit',e=>{
+ e.preventDefault();const email=document.getElementById('loginEmail').value.trim().toLowerCase(),pass=document.getElementById('loginPass').value,u=getUser(),err=document.getElementById('loginError');if(!u||u.email!==email||u.password!==pass){err.textContent='Неверная почта или пароль. В этом демо доступен только аккаунт, созданный в этом браузере.';return}localStorage.setItem(DB_SESSION,email);e.target.reset();updateNav();showView('profile');
+});
+document.getElementById('publishForm').addEventListener('submit',e=>{
+ e.preventDefault();const u=currentUser(),err=document.getElementById('pubError'),ok=document.getElementById('pubSuccess');err.textContent='';ok.textContent='';if(!u){err.textContent='Сначала создай аккаунт или войди в него.';showView('login');return}
+ const title=document.getElementById('gameTitle').value.trim(),description=document.getElementById('gameDesc').value.trim(),category=document.getElementById('gameCat').value,link=document.getElementById('gameLink').value.trim(),file=document.getElementById('gameCover').files[0];
+ if(link){try{const url=new URL(link);if(!['http:','https:'].includes(url.protocol))throw Error()}catch(_){err.textContent='Введи корректную ссылку, начинающуюся с https://';return}}
+ const save=cover=>{const games=getGames();games.push({id:Date.now(),title,description,category,link,cover,author:u.nickname});try{setGames(games)}catch(_){err.textContent='Не удалось сохранить. Возможно, обложка слишком большая.';return}e.target.reset();ok.textContent='Игра добавлена в каталог!';renderHome();renderProfile();};
+ if(file){if(file.size>1024*1024){err.textContent='Обложка должна быть меньше 1 МБ.';return}if(!file.type.startsWith('image/')){err.textContent='Выбери файл изображения.';return}const reader=new FileReader();reader.onload=()=>save(reader.result);reader.onerror=()=>{err.textContent='Не удалось прочитать обложку.'};reader.readAsDataURL(file)}else save('');
+});
+updateNav();renderHome();renderGames();
+</script></body></html>
